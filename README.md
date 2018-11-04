@@ -1,4 +1,4 @@
-# ads-pr-tica-5-rede-de-filas-e-adeia-de-markov
+# ads-prática-5-rede-de-filas-e-adeia-de-markov
 Nesta atividade é apresentado um problema de rede de filas, envolvendo a análise de desempenho de um site de comércio eletrônico.
 
 ## Questão 1:
