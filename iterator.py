@@ -7,8 +7,12 @@ def visits(grafo, entry, key):
     for vertex in grafo[key]:
         if vertex != 'exit' and vertex != key:    
             try:
-                entry[vertex] += grafo[key][vertex]*entry[key] 
-                visits(grafo,entry,vertex)
+                if vertex == 'pay':
+                    entry[vertex] = grafo[key][vertex]*entry[key]
+                    visits(grafo, entry, vertex)
+                else:
+                    entry[vertex] += grafo[key][vertex]*entry[key] 
+                    visits(grafo,entry,vertex)
             except KeyError:
                 entry[vertex] = grafo[key][vertex]*entry[key] 
                 visits(grafo,entry,vertex)
