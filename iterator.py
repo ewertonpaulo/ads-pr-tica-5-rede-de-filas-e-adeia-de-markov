@@ -1,5 +1,5 @@
 
-from grafo import grafo
+from grafo import grafo, demand
 import texttable as tt
 
 tab = tt.Texttable()
@@ -17,33 +17,66 @@ def visits(grafo, entry, key):
             entry[vertex] = entry[vertex]/(1-grafo[vertex][vertex])
     return entry
 
-def table(headings,keys):
+def table(dic):
+    headings = []
+    keys = []
+    for key in dic:
+        headings.append(key)
+        keys.append(dic[key])
     tab = tt.Texttable()
     tab.header(headings)
     tab.add_row(keys)
     s = tab.draw()
     print (s)
 
-def show(entry):
+def first(entry):
     entry = visits(grafo,entry,'entry')
-    headings = []
-    keys = []
-    for key in entry:
-        headings.append(key)
-        keys.append(entry[key])
+    table(entry)
 
-    table(headings, keys)
-
-def arrive(entry,taxa):
-    headings = []
-    keys = []
+def second(entry,taxa):
+    dic = {}
     for vertex in entry:
         entry[vertex] = entry[vertex]*taxa
-        headings.append(vertex)
-        keys.append(entry[vertex])
-    table(headings, keys)
+        dic[vertex] = entry[vertex]
+
+    table(dic)
     return entry
 
+def third(demand,req):
+    u = {}
+    total = 0
+    for i in demand:
+        total += demand[i]*req[i]
+        u[i] = demand[i]*req[i]
+    u['total']=total
+    table(u)
+    return u
+
+def fourth(req, demand, util):
+    dic  = {}
+    for i in req:
+        try:
+            dic[i] = demand[i]/(1-util['total'])
+        except:
+            pass
+    table(dic)
+    return dic
+
+def fifth(res_cpu, res_disc):
+    resp_time = {}
+    for i in res_cpu:
+        resp_time[i] = res_cpu[i]+res_disc[i]
+    table(resp_time)
+    return resp_time
+
 entry = {'entry': 1.0}
-show(entry)
-arrive(entry,5)
+
+first(entry)
+req = second(entry,5)
+util_cpu = third(demand['cpu'], req)
+util_disc = third(demand['disc'], req)
+res_cpu = fourth(req, demand['cpu'], util_cpu)
+res_disc = fourth(req, demand['disc'], util_disc)
+fifth(res_cpu, res_disc)
+
+
