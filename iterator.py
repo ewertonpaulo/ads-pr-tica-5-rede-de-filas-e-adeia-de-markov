@@ -1,6 +1,5 @@
-
-from grafo import grafo, demand
 import texttable as tt
+from grafo import grafo
 
 tab = tt.Texttable()
            
@@ -28,6 +27,7 @@ def table(dic):
     tab.add_row(keys)
     s = tab.draw()
     print (s)
+    input()
 
 def first(entry):
     entry = visits(grafo,entry,'entry')
@@ -68,15 +68,3 @@ def fifth(res_cpu, res_disc):
         resp_time[i] = res_cpu[i]+res_disc[i]
     table(resp_time)
     return resp_time
-
-entry = {'entry': 1.0}
-
-first(entry)
-req = second(entry,5)
-util_cpu = third(demand['cpu'], req)
-util_disc = third(demand['disc'], req)
-res_cpu = fourth(req, demand['cpu'], util_cpu)
-res_disc = fourth(req, demand['disc'], util_disc)
-fifth(res_cpu, res_disc)
-
-
